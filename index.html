@@ -10,25 +10,33 @@
 
 <body>
     <header>
-        <h4 id="countdown">Timer: </h4>
+        <!-- <h4 id="countdown">Timer: </h4> -->
     </header>
 
-    <main class="main-container">
         <div class="container">
-            <div class="card-contents">
-                <h1 id="header-1">
-                    Coding Quiz Challenge
-                </h1>
-                <p id="p-1">
-                    Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
-                </p>
-                <div class="">
-                    <button class="btn" id="start-quiz" type="submit">Start Quiz</button>
+            <div id="question-container" class="hide">
+                <div id="answer-buttons" class="btn-grid">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
                 </div>
             </div>
+
+            <div>
+            <h1 id="header-1">Coding Quiz Challenge</h1>
+            <p id="p-1">
+                Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+            </p>
+            </div>
+
+            <div class="controls">
+                <button class="start-btn btn" id="start-btn" type="submit">Start Quiz</button>
+                <button class="next-btn btn hide" id="start-btn" type="submit">Next</button>
+            </div>
+            <div><h4 id="countdown">Timer: </h4></div>
         </div>
 
-    </main>
     <script src="./assets/js/script.js"></script>
 </body>
 
