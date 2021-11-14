@@ -145,12 +145,16 @@ function checkIfCorrect(btnText, currentQuestionIndex){
     if(btnText === currentCheckedAnswer.text){
       if(currentCheckedAnswer.correct === true){
         score += 10;
+      }else{
+        timeLeft -=10;
       }
     }
   }
 }
 
+function endGame(){
 
+}
 
 // main function that runs to start the quiz
 function startQuiz() {
@@ -176,3 +180,11 @@ btn2.addEventListener('click', submitAnswer)
 btn3.addEventListener('click', submitAnswer)
 btn4.addEventListener('click', submitAnswer)
 
+
+//start endgame function if out of questions or timer is <=0
+
+//hide the questions container
+//show high score container where they enter their name
+//save to loccal storage when they click stage
+//click back button take them back to start quiz screen
+// try to implemenet highscore
