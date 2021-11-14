@@ -7,6 +7,8 @@ const startButton = document.createElement('start-btn');
 const headerEl = document.getElementById('header-1');
 const pEl = document.getElementById('p-1');
 const questionContainerEl = document.getElementById('question-container');
+const gameOverEl = document.getElementById("end-game")
+const scoreEl = document.getElementById("score")
 
 const questionEl = document.getElementById("question")
 const btn1 = document.getElementById("btn-1")
@@ -15,9 +17,9 @@ const btn3 = document.getElementById("btn-3")
 const btn4 = document.getElementById("btn-4")
 
 // default game values
-let score = 0;
+var score = 0;
 let startQuizBool = false;
-let timeLeft = 60;
+let timeLeft = 30;
 // var lastQuestionIndex = questions.length -1;
 const numberOfQuestions = 0;
 
@@ -63,19 +65,16 @@ const questions = [
       { text: 'parenthesis', correct: false },
     ],
   },
+  {
+    question: 'Inside which HTML element do we put the JavaScript?',
+    answers: [
+      { text: '<script>', correct: true },
+      { text: '<javascript>', correct: false },
+      { text: '<scripting>', correct: false },
+      { text: '<js>', correct: false },
+    ],
+  },
 ];
-
-function testDelete(){
-  // for(var i = 0; i < questions.length ; i++){
-  //   console.log("This is the current question ", questions[i])
-  // }
-  console.log("testDelete")
-  for(const currentQuestions of questions){
-    console.log(currentQuestions)
-  }
-}
-
-testDelete()
 
 function setQuestion(activeQuestionIndex){
   console.log(questions[activeQuestionIndex])
@@ -91,12 +90,13 @@ function setQuestion(activeQuestionIndex){
 // timer that counts down the seconds
 function countdown() {
   const timeInterval = setInterval(() => {
-    if (timeLeft >= 1) {
+    if (timeLeft >= 0) {
       timerEl.textContent = `Timer: ${timeLeft}`;
 
       timeLeft--; // decrement timeLeft by 1
     } else {
       // run function to take user to game over screen
+      endGame();
     }
   }, 1000);
 }
@@ -127,8 +127,7 @@ function verifyAnswer(event) {
   }
 
   createQuestion();
-  // if correct questionIndex ++
-  // call createQuestion();
+
 }
 
 function submitAnswer(event){
@@ -144,8 +143,11 @@ function checkIfCorrect(btnText, currentQuestionIndex){
   for (const currentCheckedAnswer of questions[currentQuestionIndex].answers){
     if(btnText === currentCheckedAnswer.text){
       if(currentCheckedAnswer.correct === true){
-        score += 10;
+        score = score + 10
+        alert("correct")
+
       }else{
+        alert("incorrect")
         timeLeft -=10;
       }
     }
@@ -153,11 +155,35 @@ function checkIfCorrect(btnText, currentQuestionIndex){
 }
 
 function endGame(){
+  if( timeLeft <= 0 || questionsIndex === questions.length ){
+    timerEl.classList.add("hide")
+    questionEl.classList.add("hide")
+    btn1.classList.add("hide")
+    btn2.classList.add("hide")
+    btn3.classList.add("hide")
+    btn4.classList.add("hide")
+    gameOverEl.classList.remove('hide');
+    scoreEl.textContent = `Your final score is : ` + score;
 
+
+    // check localStorage for high score, if it's not there, use 0
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+      highScore = 0;
+    }
+
+    if (score > highScore) {
+      localStorage.setItem("highscore", JSON.stringify(score));
+      localStorage.setItem("name", score);
+    }
+
+  }
 }
 
 // main function that runs to start the quiz
 function startQuiz() {
+
+
   startQuizBool = true;
 
   startQuizBtn.classList.add('hide');
@@ -166,11 +192,12 @@ function startQuiz() {
   questionContainerEl.classList.remove('hide');
 
   countdown();
+
   setQuestion(questionsIndex);
 
-  testDelete();
-
   createQuestions();
+
+  endGame();
 }
 
 // starts the main function when Start Quiz button is clicked
