@@ -21,7 +21,7 @@ const btn4 = document.getElementById("btn-4")
 // default game values
 var score = 0;
 let startQuizBool = false;
-let timeLeft = 30;
+let timeLeft = 60;
 const numberOfQuestions = 0;
 let questionsIndex = 0;
 
