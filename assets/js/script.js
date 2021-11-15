@@ -9,6 +9,8 @@ const pEl = document.getElementById('p-1');
 const questionContainerEl = document.getElementById('question-container');
 const gameOverEl = document.getElementById("end-game")
 const scoreEl = document.getElementById("score")
+const initialEl = document.getElementById("initials")
+const butInitialsEl = document.querySelector("save-initials")
 
 const questionEl = document.getElementById("question")
 const btn1 = document.getElementById("btn-1")
@@ -20,14 +22,13 @@ const btn4 = document.getElementById("btn-4")
 var score = 0;
 let startQuizBool = false;
 let timeLeft = 30;
-// var lastQuestionIndex = questions.length -1;
 const numberOfQuestions = 0;
-
 let questionsIndex = 0;
 
 
 
 // set up empty array to hold questions
+//some questions are from w3schools javascript quiz
 const questions = [
   {
     question: 'Commonly used data types DO Not Include:',
@@ -74,6 +75,51 @@ const questions = [
       { text: '<js>', correct: false },
     ],
   },
+  {
+    question: 'How do you create a function in JavaScript?',
+    answers: [
+      { text: 'function myFunction()', correct: true },
+      { text: 'function:myFunction()', correct: false },
+      { text: 'function = myFunction()', correct: false },
+      { text: 'function = true', correct: false },
+    ],
+  },
+  {
+    question: 'How to write an IF statement in JavaScript?',
+    answers: [
+      { text: 'if i == 5 then', correct: false },
+      { text: 'if (i == 5)', correct: true },
+      { text: 'if i = 5 then', correct: false },
+      { text: 'if i = 5', correct: false },
+    ],
+  },
+  {
+    question: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
+    answers: [
+      { text: 'if (i <> 5)', correct: false },
+      { text: 'if i =! 5 then', correct: false },
+      { text: 'if (i != 5)', correct: true },
+      { text: 'if i <> 5', correct: false },
+    ],
+  },
+  {
+    question: 'How does a FOR loop start?',
+    answers: [
+      { text: 'for (i = 0; i <= 5)', correct: false },
+      { text: 'for i = 1 to 5', correct: false },
+      { text: 'for (i <= 5; i++)', correct: false },
+      { text: 'for (i = 0; i <= 5; i++)', correct: true },
+    ],
+  },
+  {
+    question: 'How do you round the number 7.25, to the nearest integer?',
+    answers: [
+      { text: 'Math.round(7.25)', correct: true },
+      { text: 'round(7.25)', correct: false },
+      { text: 'rnd(7.25)', correct: false },
+      { text: 'Math.rnd(7.25)', correct: false },
+    ],
+  },
 ];
 
 function setQuestion(activeQuestionIndex){
@@ -96,30 +142,20 @@ function countdown() {
       timeLeft--; // decrement timeLeft by 1
     } else {
       // run function to take user to game over screen
+      timeLeft = 0
       endGame();
     }
   }, 1000);
 }
 
+//creates the questions and sets their text
 function createQuestions() {
   const { question } = questions[numberOfQuestions];
   question.textContent = questions;
   console.log(question);
 }
 
-// function createQuestion(){
-//     var question = questions[questionsIndex];
-//     question.textContent  = question.text;
-//     for(var i = 0; i < question.answers.length; i++){
-
-//         var answer = document.createElement("button");
-//         answer.textContent = question.answers[i].text;
-//         answer.addEventListener("click", verifyAnswer())
-//         li1.appendChild(answer);
-
-//     }
-// }
-
+//checks if answers are correct
 function verifyAnswer(event) {
   // verify if answer is correct
   if (answer[i] == true) {
@@ -130,8 +166,8 @@ function verifyAnswer(event) {
 
 }
 
+
 function submitAnswer(event){
-  console.log(event)
 
   checkIfCorrect(event.target.innerText, questionsIndex)
   questionsIndex++
@@ -154,6 +190,21 @@ function checkIfCorrect(btnText, currentQuestionIndex){
   }
 }
 
+//saves initials and score to local storage
+function saveScores(){
+  // // check localStorage for high score, if it's not there, use 0
+  // //var highScore = localStorage.getItem("score");
+  // var initials = localStorage.getItem("initials")
+  // if (highScore === null) {
+  //   highScore = 0;
+  // }
+  
+
+  // // store highscore and initials
+  // localStorage.setItem("score", JSON.stringify(score));
+  // localStorage.setItem("initials", JSON.stringify(initials)); 
+}
+
 function endGame(){
   if( timeLeft <= 0 || questionsIndex === questions.length ){
     timerEl.classList.add("hide")
@@ -163,19 +214,20 @@ function endGame(){
     btn3.classList.add("hide")
     btn4.classList.add("hide")
     gameOverEl.classList.remove('hide');
+    initialEl.classList.remove('hide');
     scoreEl.textContent = `Your final score is : ` + score;
+    //butInitialsEl.addEventListener('click', saveScores())
 
-
-    // check localStorage for high score, if it's not there, use 0
-    var highScore = localStorage.getItem("highscore");
+    var highScore = localStorage.getItem("score");
+    var initials = localStorage.getItem("initials")
     if (highScore === null) {
       highScore = 0;
     }
-
-    if (score > highScore) {
-      localStorage.setItem("highscore", JSON.stringify(score));
-      localStorage.setItem("name", score);
-    }
+    
+  
+    // store highscore and initials
+    localStorage.setItem("score", JSON.stringify(score));
+    localStorage.setItem("initials", JSON.stringify(initials));
 
   }
 }
