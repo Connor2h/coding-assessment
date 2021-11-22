@@ -13,7 +13,7 @@ Multiple choice JavaScript Quiz
 
 
 ## Website
-https://connor2h.github.io/Connor_Hollis_Portfolio/
+https://connor2h.github.io/coding-assessment/
 ![codingQuizChallenge](https://user-images.githubusercontent.com/90579571/141705194-24bf9392-0099-46b5-a230-14fe0244bb4c.JPG)
 
 ## Contribution
